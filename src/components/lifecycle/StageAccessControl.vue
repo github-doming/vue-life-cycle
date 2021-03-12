@@ -24,9 +24,6 @@
   import {EventBus} from "@/component";
   import lifecycleData from './LifecycleData.json';
 
-  const roleColumns = [{title: '选定角色', dataIndex: 'name', key: 'key', scopedSlots: {customRender: 'radio'},}];
-  const accessColumns = [{title: '权限', dataIndex: 'option', key: 'key', scopedSlots: {customRender: 'access'},}];
-
   export default {
     name: "StageAccessControl",
     props: {
@@ -79,9 +76,11 @@
       }
     },
     data() {
+      let local = JSON.parse(localStorage.getItem('lifeCycleLocal'));
       return {
-        roleColumns,
-        accessColumns,
+        local,
+        roleColumns : [{title:local.selectedRole, dataIndex: 'name', key: 'key', scopedSlots: {customRender: 'radio'},}],
+        accessColumns :[{title: local.access, dataIndex: 'option', key: 'key', scopedSlots: {customRender: 'access'},}],
         currentRole: null,
         accessData: null,
         roleData: [],

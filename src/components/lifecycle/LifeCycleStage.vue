@@ -1,19 +1,19 @@
 <template>
 	<div>
 		<div class="tab-title">
-			特性 - 阶段
+			{{local.feature}} - {{local.stage}}
 		</div>
 		<div class="tab-props">
 			<div style="float: left;margin-right: 50px">
-				<label>状态：</label>
-				<a-select style="width: 150px" placeholder="请选择状态" :key="stageActive.code" :default-value="stageActive.code"
+				<label>{{local.status}}：</label>
+				<a-select style="width: 150px" :placeholder="local.selectStatus" :key="stageActive.code" :default-value="stageActive.code"
 									@change="stateChange" show-search>
 					<a-select-option v-for="item in states" :key="item.code">{{item.name}}</a-select-option>
 				</a-select>
 			</div>
 			<div>
-				<label>版本系列：</label>
-				<a-select style="width: 150px" placeholder="请选择版本系列" :key="stageActive.version"
+				<label>{{local.versionSeries}}：</label>
+				<a-select style="width: 150px" :placeholder="local.selectVersionSeries" :key="stageActive.version"
 									:default-value="stageActive.version" @change="versionChange">
 					<a-select-option v-for="item in versions" :key="item.code">
 						{{item.name}}
@@ -22,17 +22,17 @@
 			</div>
 		</div>
 		<div style="margin-left: 10px">
-			<a-tabs type="card" :key="baseType ? 'transform' : ''" :default-active-key="baseType ? 'transform' : ''">
-				<a-tab-pane key="transform" tab="转换">
+			<a-tabs  size="small" type="card"  :key="baseType ? 'transform' : ''" :default-active-key="baseType ? 'transform' : ''">
+				<a-tab-pane key="transform" :tab="local.stage">
 					<StageTransform :stageData="stageData" :stageActive="stageActive"/>
 				</a-tab-pane>
-				<a-tab-pane key="role" tab="角色" :disabled="baseType">
+				<a-tab-pane key="role" :tab="local.role" :disabled="baseType">
 					<StageRole :stageActive="stageActive"/>
 				</a-tab-pane>
-				<a-tab-pane key="accessControl" tab="访问控制" :disabled="baseType">
+				<a-tab-pane key="accessControl" :tab="local.accessControl" :disabled="baseType">
 					<StageAccessControl :roles="stageActive.roles"/>
 				</a-tab-pane>
-				<a-tab-pane key="workflow" tab="工作流" :disabled="baseType">
+				<a-tab-pane key="workflow" :tab="local.workflow" :disabled="baseType">
 					<StageWorkflow
 									:workflowData="stageActive.workflow"
 									:lastStage="stageData.length===0 ||stageActive.key !== stageData[stageData.length-1].key"/>
@@ -73,6 +73,7 @@
     },
     data() {
       return {
+        local: JSON.parse(localStorage.getItem('lifeCycleLocal')),
         states: lifecycleData.states, versions: lifecycleData.versions, roles: [],
       }
     },
@@ -80,7 +81,7 @@
       stateChange(stateCode) {
         this.$emit('stateChange', stateCode);
       },
-			versionChange(versionCode) {
+      versionChange(versionCode) {
         this.$emit('versionChange', versionCode);
       },
     },
@@ -89,7 +90,8 @@
 
 <style scoped>
 	.tab-title {
-		padding: 10px 0 25px 25px;
+		padding-left: 4px;
+		padding-top: 0;
 		font-size: 20px;
 	}
 

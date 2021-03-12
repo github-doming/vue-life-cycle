@@ -1,5 +1,5 @@
 <template>
-	<div style="margin: 24px">
+	<div style="margin: 5px">
 		<LifeCycleTemplate/>
 	</div>
 </template>

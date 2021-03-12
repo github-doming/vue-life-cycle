@@ -29,13 +29,11 @@
       this.renderData(this.stageActive);
     },
     computed: {
-
       columns() {
         const stateMap = {};
         lifecycleData.states.forEach(state => {
           stateMap[state.code] = state.name;
         });
-
         const columns = [
           {title: '', dataIndex: 'name', width: 100, fixed: 'left', align: 'center',}];
         for (let data of this.stageData) {

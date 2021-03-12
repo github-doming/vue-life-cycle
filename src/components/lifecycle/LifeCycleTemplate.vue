@@ -7,15 +7,15 @@
 			<a-button class="top-button" @click="pasteStage" icon="copy"/>
 			<a-button class="top-button" @click="deleteStage" icon="close"/>
 		</div>
-		<div :style="{padding:'8px',}">
-			<h3>生命周期-{{lcData.info.name}}</h3>
+		<div style="padding: 4px">
+			<h3>{{local.lifeCycle}}-{{lcData.info.name}}</h3>
 			<div>
-				<a-checkbox v-model="lcData.info.routing"> 可用于路由</a-checkbox>
-				<a-checkbox v-model="lcData.info.enabled"> 已启用</a-checkbox>
+				<a-checkbox v-model="lcData.info.routing"> {{local.isRouting}}</a-checkbox>
+				<a-checkbox v-model="lcData.info.enabled"> {{local.isEnable}}</a-checkbox>
 			</div>
 		</div>
 		<div @click="activeState = ''">
-			<a-row style="background: #f7f7f7;height: 200px;overflow: auto;" type="flex" align="middle" justify="center">
+			<a-row style="background: #f7f7f7;height: 150px;overflow: auto;" type="flex" align="middle" justify="center">
 				<draggable v-model="stageData" @start="drag=true" @end="drag=false" class="ant-row-flex">
 					<Stage
 									v-for="(item,i) in stageData" :key="item.key" :phaseKey="item.key" :gate="i!== stageData.length-1"
@@ -32,15 +32,9 @@
 											@stateChange="stateChange" @versionChange="versionChange"/>
 		</div>
 		<div style="margin-top: 10px">
-			<a-button class="bottom-button" type="primary" @click="subData">
-				确定
-			</a-button>
-			<a-button class="bottom-button" @click="saveData">
-				保存
-			</a-button>
-			<a-button class="bottom-button" @click="cancelData" type="danger">
-				取消
-			</a-button>
+			<a-button class="bottom-button" type="primary" @click="subData"> {{local.save}}</a-button>
+			<a-button class="bottom-button" @click="saveData"> {{local.download}}</a-button>
+			<a-button class="bottom-button" @click="cancelData" type="danger"> {{local.cancel}}</a-button>
 		</div>
 	</div>
 
@@ -96,6 +90,7 @@
       transitions: [{code: '1', name: '优化'}, {code: '2', name: '修订'}, {code: '3', name: '升级'},
         {code: '4', name: '审阅'}, {code: '5', name: '废弃'}, {code: '6', name: '修改'}, {code: '7', name: '生产已发布'},
         {code: '8', name: '设置状态'}, {code: '9', name: '锁定'}],
+      versions: [{name: '无', code: 'sp'}, {name: 'Mil Std', code: 'Mil Std'}, {name: '数字', code: 'Number'},],
       roles: [{code: '1', name: 'CAD作者', oid: '1'}, {code: '2', name: 'CAPA实施者', oid: '2'},
         {code: '3', name: 'CAPA审阅者', oid: '3'},
         {code: '4', name: 'CAPA措施有效性批准者', oid: '4'}, {code: '5', name: 'CAPA措施校验者', oid: 5},
@@ -122,10 +117,49 @@
         {oid: '10', name: 'PIAL _MDefectWf', code: '2'},
         {oid: '11', name: 'PIALMDesignDocWf', code: '1'},
       ],
+      local: {
+        lifeCycle: '生命周期',
+        isRouting: '可用于路由',
+        isEnable: '已启用',
+        save: '保存',
+        download: '下载',
+        cancel: '取消',
+        ok: '确认',
+        feature: '特性',
+        type: '类型',
+        basic: '基本',
+        advance: '高级',
+        name: '名称',
+        enterLifeCycleName: '请输入生命周期模板名称',
+        description: '说明',
+        selectSupportClass: '请选择模板支持类',
+        clazz: '类',
+        stage: '阶段',
+        status: '状态',
+        selectStatus: '请选择状态',
+        versionSeries: '版本系列',
+        selectVersionSeries: '请选择版本系列',
+        role: '角色',
+        accessControl: '访问控制',
+        workflow: '工作流',
+        selectedRole: '选定角色',
+        access: '权限',
+        availableRoles: '可用角色',
+        add: '添加',
+        remove: '移除',
+        item: '项',
+        emptyList: '列表为空',
+        enterSearchContent: '请输入搜索内容',
+
+        process: '进程',
+        skim: '浏览',
+        lastVersion: '使用最新小版本',
+        clear: '清理',
+        gate: '关口',
+        selectTemplateProcess: '选择模板进程',
+      }
     }
   };
-  const versions = [{name: '无', code: 'sp'}, {name: 'Mil Std', code: 'Mil Std'}, {name: '数字', code: 'Number'},];
-
   import Stage from "./Stage";
   import LifeCycleInfo from "./LifeCycleInfo"
   import LifeCycleStage from "./LifeCycleStage"
@@ -140,8 +174,11 @@
   export default {
     name: "LifeCycleTemplate",
     components: {Stage, draggable, LifeCycleInfo, LifeCycleStage},
+		beforeCreate(){
+    },
     data() {
       return {
+        local: JSON.parse(localStorage.getItem('lifeCycleLocal')),
         //用于复制和剪切阶段的临时存放位置
         stageTemp: null,
         lcData: isEmpty(meta.data.templateData) ? createTemplate : meta.data.templateData,
@@ -149,10 +186,11 @@
       };
     },
     created() {
+      localStorage.setItem('lifeCycleLocal', JSON.stringify(meta.data.local));
       lifecycleData.states = meta.data.states;
       lifecycleData.supportClass = meta.data.supportClass;
       lifecycleData.transitions = meta.data.transitions;
-      lifecycleData.versions = isEmpty(meta.data.versions) ? versions : meta.data.versions;
+      lifecycleData.versions = meta.data.versions;
       lifecycleData.roles = meta.data.roles;
       lifecycleData.accesses = meta.data.accesses;
       lifecycleData.workflows = meta.data.workflows;

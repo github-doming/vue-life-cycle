@@ -1,49 +1,49 @@
 <template>
 	<div style="height: 398px;">
 		<a-form :label-col="{ span: 2 }" :wrapper-col="{ span: 20 }">
-			<a-form-item label="阶段进程">
+			<a-form-item :label="local.stage+local.process">
 				<a-row :gutter="24">
 					<a-col :span="12">
 						<a-button type="link" @click="showModal('phase')">{{workflowMap[data['phase'].process]}}</a-button>
 					</a-col>
 					<a-col :span="3">
-						<a-button @click="showModal('phase')"> 浏览...</a-button>
+						<a-button @click="showModal('phase')"> {{local.skim}}...</a-button>
 					</a-col>
 					<a-col :span="7">
 						<a-checkbox v-model="data.phase.lastVersion" @change="lastVersionChange()"
-												:disabled="emptyProcess('phase')">使用最新小版本
+												:disabled="emptyProcess('phase')">{{local.lastVersion}}
 						</a-checkbox>
 					</a-col>
 					<a-col :span="2">
 						<a-button type="dashed" @click="clearProcess('phase')"
-											:disabled="emptyProcess('phase')"> 清理
+											:disabled="emptyProcess('phase')"> {{local.clear}}
 						</a-button>
 					</a-col>
 				</a-row>
 			</a-form-item>
-			<a-form-item label="关口进程" v-show="lastStage">
+			<a-form-item :label="local.gate+local.process" v-show="lastStage">
 				<a-row :gutter="24">
 					<a-col :span="12">
 						<a-button type="link" @click="showModal('gateway')">{{workflowMap[data['gateway'].process]}}
 						</a-button>
 					</a-col>
 					<a-col :span="3">
-						<a-button @click="showModal('gateway')"> 浏览...</a-button>
+						<a-button @click="showModal('gateway')"> {{local.skim}}...</a-button>
 					</a-col>
 					<a-col :span="7">
 						<a-checkbox v-model="data.gateway.lastVersion" @change="lastVersionChange"
-												:disabled="emptyProcess('gateway')">使用最新小版本
+												:disabled="emptyProcess('gateway')">{{local.lastVersion}}
 						</a-checkbox>
 					</a-col>
 					<a-col :span="2">
 						<a-button type="dashed" @click="clearProcess('gateway')"
-											:disabled="emptyProcess('gateway')"> 清理
+											:disabled="emptyProcess('gateway')"> {{local.clear}}
 						</a-button>
 					</a-col>
 				</a-row>
 			</a-form-item>
 		</a-form>
-		<a-modal v-model="visible" title="选择模板进程" @ok="workflowOk" ok-text="确认" cancel-text="取消">
+		<a-modal v-model="visible" :title="local.selectTemplateProcess" @ok="workflowOk" :ok-text="local.ok" :cancel-text="local.cancel">
 			<a-radio-group v-model="process" @change="workflowChange">
 				<a-radio class="radios-style" v-for="item in workflows" :key="item.code" :value="item.code">{{item.name}}
 				</a-radio>
@@ -93,6 +93,7 @@
     },
     data() {
       return {
+        local: JSON.parse(localStorage.getItem('lifeCycleLocal')),
         visible: false,
         workflows: lifecycleData.workflows,
         data: null,

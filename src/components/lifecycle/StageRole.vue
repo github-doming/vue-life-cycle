@@ -2,8 +2,8 @@
 	<div>
 		<a-transfer
 						:data-source="options" :target-keys="targetKeys()" :render="item => item.title"
-						:titles="['可用角色', '选定角色']" :operations="['添加', '移除']" :list-style="{width: '250px',height: '398px',}"
-						:locale="{ itemUnit: '项', itemsUnit: '项', notFoundContent: '列表为空', searchPlaceholder: '请输入搜索内容' }"
+						:titles="[local.availableRoles,local.selectedRole]" :operations="[local.add, local.remove]" :list-style="{width: '250px',height: '398px',}"
+						:locale="{ itemUnit: local.item, itemsUnit: local.item, notFoundContent: local.emptyList, searchPlaceholder: local.enterSearchContent }"
 						@change="handleChange" :filter-option="filterOption" show-search>
 		</a-transfer>
 	</div>
@@ -21,7 +21,11 @@
         required: true,
       },
     },
-
+    data() {
+      return {
+        local: JSON.parse(localStorage.getItem('lifeCycleLocal')),
+      };
+    },
     computed:{
       options(){
         return JSON.parse(JSON.stringify(lifecycleData.roles).replace(/code/g, 'key').replace(/name/g, 'title'));

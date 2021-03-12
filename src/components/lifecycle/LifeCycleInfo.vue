@@ -1,24 +1,24 @@
 <template>
-	<div style="height: 561px;">
+	<div style="height: 56vh">
 		<div class="tab-title">
-			特性 - 生命周期
+			{{local.feature}} - {{local.lifeCycle}}
 		</div>
 		<a-form :label-col="{ span: 2 }" :wrapper-col="{ span: 8 }">
-			<a-form-item label="类型">
+			<a-form-item :label="local.type">
 				<a-radio-group @change="typeChange" :default-value="templateInfo.type">
-					<a-radio value="basic"> 基本</a-radio>
-					<a-radio value="advanced"> 高级</a-radio>
+					<a-radio value="basic">{{local.basic}}</a-radio>
+					<a-radio value="advanced"> {{local.advance}}</a-radio>
 				</a-radio-group>
 			</a-form-item>
-			<a-form-item label="名称">
-				<a-input :default-value="templateInfo.name" @change="nameChange" placeholder="请输入生命周期模板名称"/>
+			<a-form-item :label="local.name">
+				<a-input :default-value="templateInfo.name" @change="nameChange" :placeholder="local.enterLifeCycleName"/>
 			</a-form-item>
-			<a-form-item label="说明">
+			<a-form-item :label="local.description">
 				<a-textarea @change="descriptionChange" :auto-size="{ minRows: 1, maxRows: 5 }"
 										:default-value="templateInfo.description"/>
 			</a-form-item>
-			<a-form-item label="类">
-				<a-select :default-value="templateInfo.supportClass" @change="classChange" placeholder="请选择模板支持类">
+			<a-form-item :label="local.clazz">
+				<a-select :default-value="templateInfo.supportClass" @change="classChange" :placeholder="local.selectSupportClass">
 					<a-select-option v-for="item in supportClass" :key="item.code" :value="item.code">
 						{{item.name}}
 					</a-select-option>
@@ -42,6 +42,7 @@
     },
     data() {
       return {
+        local: JSON.parse(localStorage.getItem('lifeCycleLocal')),
         supportClass: lifecycleData.supportClass,
         infoData: this.templateInfo,
       }
@@ -73,7 +74,8 @@
 
 <style scoped>
 	.tab-title {
-		font-size: 15px;
-		padding: 10px 0 0 25px;
+		padding-left: 4px;
+		padding-top: 0;
+		font-size: 20px;
 	}
 </style>
