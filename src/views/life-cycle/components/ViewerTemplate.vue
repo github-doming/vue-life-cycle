@@ -1,11 +1,10 @@
 <template>
   <div class="un-select">
-    <top-button :lifeCycleData="lifeCycleData"/>
     <div class="lc-head">
       <h3>{{local.lifeCycle}}-{{lifeCycleData.info.name}}</h3>
       <div>
-        <a-checkbox v-model="lifeCycleData.info.routing"> {{local.isRouting}}</a-checkbox>
-        <a-checkbox v-model="lifeCycleData.info.enabled"> {{local.isEnable}}</a-checkbox>
+        <a-checkbox :checked="lifeCycleData.info.routing"> {{local.isRouting}}</a-checkbox>
+        <a-checkbox :checked="lifeCycleData.info.enabled"> {{local.isEnable}}</a-checkbox>
       </div>
     </div>
     <central-stage :lifeCycleData="lifeCycleData"/>
@@ -13,20 +12,19 @@
       <context-info :lifeCycleData="lifeCycleData" class="context-height" v-show="!activeKey"/>
       <context-stage :lifeCycleData="lifeCycleData" class="context-height" v-show="activeKey"/>
     </div>
-    <bottom-button :lifeCycleData="lifeCycleData" ref="bottomButton" class="lc-bottom"/>
   </div>
+
 </template>
 
 <script>
-  import TopButton from "./lifecycle-create/TopButton";
-  import CentralStage from "./lifecycle-create/CentralStage";
-  import ContextInfo from "./lifecycle-create/ContextInfo";
-  import ContextStage from "./lifecycle-create/ContextStage";
-  import BottomButton from "./lifecycle-create/BottomButton";
-  import {LifeCycleComputed} from "@/views/life-cycle/js/LifeCycleHelper";
-
+  import ContextStage from "./lifecycle-viewer/ContextStage";
+  import CentralStage from "./lifecycle-viewer/CentralStage";
+  import ContextInfo from "./lifecycle-viewer/ContextInfo";
+  import {LifeCycleComputed} from "../js/LifeCycleHelper";
   export default {
-    components: {BottomButton, ContextStage, ContextInfo, CentralStage, TopButton},
+    name: "ViewerTemplate",
+
+    components: {CentralStage,ContextInfo,ContextStage},
     props: {
       lifeCycleData: {
         type: Object,
@@ -39,11 +37,6 @@
     data() {
       return {
         local: JSON.parse(localStorage.getItem('lifeCycleLocal')),
-      }
-    },
-    methods: {
-      subData() {
-        this.$refs.bottomButton.subData();
       }
     },
   }
@@ -61,10 +54,7 @@
   }
 
   .context-height {
-    height: 48vh;
+    height: 52vh;
   }
 
-  .lc-bottom {
-    margin-top: 10px;
-  }
 </style>

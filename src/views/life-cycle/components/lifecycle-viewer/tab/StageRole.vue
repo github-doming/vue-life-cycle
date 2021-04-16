@@ -1,10 +1,9 @@
 <template>
   <div>
     <a-transfer :data-source="options" :target-keys="targetKeys" :titles="[local.availableRoles,local.selectedRole]"
-                :operations="[local.add, local.remove]" :list-style="{width: '250px',height: '350px',}"
+                :operations="[local.add, local.remove]" :list-style="{width: '250px',height: '340px',}"
                 :locale="{ itemUnit: local.item, itemsUnit: local.item, notFoundContent: local.emptyList, searchPlaceholder: local.enterSearchContent }"
-                :filter-option="(inputValue, option)=> option.title.indexOf(inputValue) > -1"
-                @change="handleChange" :render="item => item.title" show-search>
+                :render="item => item.title" :selectedKeys="[]">
     </a-transfer>
   </div>
 </template>
@@ -36,28 +35,6 @@
         options: JSON.parse(JSON.stringify(LifeCycleData.roles).replace(/code/g, 'key').replace(/name/g, 'title')),
       }
     },
-
-    methods: {
-      handleChange(targetKeys) {
-        const newRoles = [];
-        for (let role of LifeCycleData.roles) {
-          if (targetKeys.indexOf(role.code) > -1) {
-            let isNew = true;
-            for (let stageRole of this.currentStage.roles) {
-              if (role.code === stageRole.code) {
-                newRoles.push(stageRole);
-                isNew = false;
-                break;
-              }
-            }
-            if (isNew) {
-              newRoles.push({code: role.code, name: role.name, oid: role.oid});
-            }
-          }
-        }
-        this.currentStage.roles = newRoles;
-      },
-    }
   }
 </script>
 

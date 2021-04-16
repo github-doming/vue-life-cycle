@@ -3,7 +3,7 @@
     <a-row class="stage-drag" type="flex" align="middle" justify="center">
       <draggable v-model="stageData" @start="drag=true" @end="drag=false" class="ant-row-flex">
         <stage v-for="(item,index) in stageData" :phaseKey="item.key" :hasGate="index!== stageData.length-1"
-               :class="{'stage-current':activeKey === item.key}" @stageClick="stageClick">
+               :class="{'stage-current':activeKey === item.key}" @stageClick="stageClick" :key="item.key">
           <span slot="phase">{{phaseName(item.code)}}</span>
         </stage>
       </draggable>
@@ -14,9 +14,9 @@
 
 <script>
   import draggable from "vuedraggable";
-  import Stage from "./tab/Stage"
+  import Stage from "../tab/Stage"
   import LifeCycleData from '../../js/LifeCycleData'
-  import {LifeCycleComputed} from "../../js/LifeCycleHelper";
+  import {LifeCycleComputed, LifeCycleMethod} from "../../js/LifeCycleHelper";
 
   export default {
     name: "Central-Stage",
@@ -32,20 +32,8 @@
       activeKey: LifeCycleComputed.activeKey(),
     },
     methods: {
-      stageClick(phaseKey) {
-        this.activeKey = phaseKey;
-      },
-      phaseName(phaseCode) {
-        if (phaseCode) {
-          for (let state of LifeCycleData.states) {
-            if (state.code === phaseCode) {
-              return state.name;
-            }
-          }
-        }
-        return '';
-      },
-
+      stageClick: LifeCycleMethod.stageClick(),
+      phaseName: LifeCycleMethod.phaseName(),
     },
   }
 </script>

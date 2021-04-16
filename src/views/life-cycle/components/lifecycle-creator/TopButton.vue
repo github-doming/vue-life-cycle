@@ -1,10 +1,20 @@
 <template>
   <div>
-    <a-button class="top-button" icon="plus-square" @click="addStage"/>
-    <a-button class="top-button" icon="scissor" @click="cutStage"/>
-    <a-button class="top-button" icon="snippets" @click="copyStage"/>
-    <a-button class="top-button" icon="copy" @click="pasteStage"/>
-    <a-button class="top-button" icon="close" @click="deleteStage"/>
+    <a-tooltip :title="local.addStage" class="top-button" :get-popup-container="(trigger)=>trigger.parentElement">
+      <a-button class="top-button" icon="plus-square" @click="addStage"/>
+    </a-tooltip>
+    <a-tooltip :title="local.cutStage" class="top-button">
+      <a-button icon="scissor" @click="cutStage"/>
+    </a-tooltip>
+    <a-tooltip :title="local.copyStage" class="top-button">
+      <a-button icon="snippets" @click="copyStage"/>
+    </a-tooltip>
+    <a-tooltip :title="local.pasteStage" class="top-button">
+      <a-button icon="copy" @click="pasteStage"/>
+    </a-tooltip>
+    <a-tooltip :title="local.deleteStage" class="top-button">
+      <a-button icon="close" @click="deleteStage"/>
+    </a-tooltip>
   </div>
 </template>
 
@@ -21,7 +31,7 @@
     },
     data() {
       return {
-        stageTemp: null,
+        local: JSON.parse(localStorage.getItem('lifeCycleLocal')), stageTemp: null,
       }
     },
     computed: {

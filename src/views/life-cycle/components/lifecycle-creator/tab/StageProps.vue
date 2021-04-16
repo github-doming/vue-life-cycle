@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import LifeCycleData from "@/views/life-cycle/js/LifeCycleData";
+  import LifeCycleData from '../../../js/LifeCycleData'
 
   export default {
     name: "StageProps",

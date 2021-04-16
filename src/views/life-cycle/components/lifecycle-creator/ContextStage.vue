@@ -30,7 +30,7 @@
   import StageRole from "./tab/StageRole";
   import StageAccessControl from "./tab/StageAccessControl";
   import StageWorkflow from "./tab/StageWorkflow";
-  import StageProps from "@/views/life-cycle/components/lifecycle-create/tab/StageProps";
+  import StageProps from "./tab/StageProps";
   import {LifeCycleComputed} from '../../js/LifeCycleHelper';
 
   export default {
