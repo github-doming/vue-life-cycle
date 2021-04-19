@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import {LifeCycleFunction} from '../../js/LifeCycleHelper';
+  import {LifeCycleFunction} from '../js/LifeCycleHelper';
 
   export default {
     name: "BottomButton",

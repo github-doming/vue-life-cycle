@@ -20,7 +20,7 @@
   import ContextStage from "./lifecycle-viewer/ContextStage";
   import CentralStage from "./lifecycle-viewer/CentralStage";
   import ContextInfo from "./lifecycle-viewer/ContextInfo";
-  import {LifeCycleComputed} from "../js/LifeCycleHelper";
+  import {LifeCycleComputed} from "./js/LifeCycleHelper";
   export default {
     name: "ViewerTemplate",
 

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import {LifeCycleComputed, LifeCycleFunction} from '../../js/LifeCycleHelper';
+  import {LifeCycleComputed, LifeCycleFunction} from '../js/LifeCycleHelper';
 
   export default {
     name: "TopButton",

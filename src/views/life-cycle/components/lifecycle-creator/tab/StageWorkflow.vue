@@ -50,7 +50,7 @@
 
 <script>
 
-  import LifeCycleData from '../../../js/LifeCycleData'
+  import LifeCycleData from '../../js/LifeCycleData'
 
   export default {
     name: "StageWorkflow",

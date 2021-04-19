@@ -31,7 +31,7 @@
   import StageRole from "./tab/StageRole";
   import StageTransform from "./tab/StageTransform";
   import StageProps from "./tab/StageProps";
-  import {LifeCycleComputed} from '../../js/LifeCycleHelper';
+  import {LifeCycleComputed} from '../js/LifeCycleHelper';
 
   export default {
     name: "ContextStage",

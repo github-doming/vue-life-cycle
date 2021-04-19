@@ -15,8 +15,7 @@
 <script>
   import draggable from "vuedraggable";
   import Stage from "../tab/Stage"
-  import LifeCycleData from '../../js/LifeCycleData'
-  import {LifeCycleComputed, LifeCycleMethod} from "../../js/LifeCycleHelper";
+  import {LifeCycleComputed, LifeCycleMethod} from "../js/LifeCycleHelper";
 
   export default {
     name: "Central-Stage",

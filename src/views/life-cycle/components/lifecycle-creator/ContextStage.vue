@@ -31,7 +31,7 @@
   import StageAccessControl from "./tab/StageAccessControl";
   import StageWorkflow from "./tab/StageWorkflow";
   import StageProps from "./tab/StageProps";
-  import {LifeCycleComputed} from '../../js/LifeCycleHelper';
+  import {LifeCycleComputed} from '../js/LifeCycleHelper';
 
   export default {
     name: "ContextStage",

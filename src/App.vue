@@ -25,12 +25,13 @@
 </template>
 
 <script>
-  import LifeCycleTemplate from "@/components/lifecycle/LifeCycleTemplate";
-  import CreatorTemplate from "@/views/life-cycle/components/CreatorTemplate";
-  import {LifeCycleData, LifeCycleFunction} from "@/views/life-cycle/js/LifeCycleHelper";
-  import cacheData from '@/views/life-cycle/js/LifeCycleData';
-  import ViewerTemplate from "@/views/life-cycle/components/ViewerTemplate";
 
+
+  import LifeCycleTemplate from "./components/lifecycle/LifeCycleTemplate";
+  import CreatorTemplate from "./views/life-cycle/components/CreatorTemplate";
+  import ViewerTemplate from "./views/life-cycle/components/ViewerTemplate";
+  import {LifeCycleData, LifeCycleFunction} from "./views/life-cycle/components/js/LifeCycleHelper";
+  import cacheData from "./views/life-cycle/components/js/LifeCycleData";
 
   export default {
     name: "App",

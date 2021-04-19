@@ -23,7 +23,7 @@
   import ContextInfo from "./lifecycle-creator/ContextInfo";
   import ContextStage from "./lifecycle-creator/ContextStage";
   import BottomButton from "./lifecycle-creator/BottomButton";
-  import {LifeCycleComputed} from "../js/LifeCycleHelper";
+  import {LifeCycleComputed} from "./js/LifeCycleHelper";
 
   export default {
     components: {BottomButton, ContextStage, ContextInfo, CentralStage, TopButton},

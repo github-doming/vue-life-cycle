@@ -11,7 +11,7 @@
 
 <script>
   import Stage from "../tab/Stage"
-  import {LifeCycleComputed,LifeCycleMethod} from "../../js/LifeCycleHelper";
+  import {LifeCycleComputed,LifeCycleMethod} from "../js/LifeCycleHelper";
 
   export default {
     name: "CentralStage",

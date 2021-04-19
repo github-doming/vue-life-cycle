@@ -136,6 +136,7 @@ export const LifeCycleComputed = {
     }
   },
 };
+import cacheData from "./LifeCycleData";
 export const LifeCycleMethod = {
   stageClick() {
     return function (phaseKey) {
@@ -145,7 +146,7 @@ export const LifeCycleMethod = {
   phaseName(){
     return function (phaseCode) {
       if (phaseCode) {
-        for (let state of LifeCycleData.states) {
+        for (let state of cacheData.states) {
           if (state.code === phaseCode) {
             return state.name;
           }
