@@ -69,25 +69,38 @@ const workflows = [
   {oid: '11', name: 'PIALMDesignDocWf', code: '1'},
 ];
 const templateData = {
-  info: {type: 'advanced', name: '测试模板名称', supportClass: 'java.lang.String', routing: true, enabled: true},
-  stage: {
-    activeKey: '',
-    data: [{
-      code: 'RELEASE', key: '1', version: 'Number',
-      roles: [{code: '1', name: 'CAD作者', oid: '1'}, {code: '2', name: 'CAPA实施者', oid: '2', access: ['-1', '2']},
-        {code: '12', name: 'CAPA请求者', oid: '12', access: ['5', '8']},],
-      transform: [{transition: '1', state: ['1', '2', '3', '4']}, {transition: '2', state: ['5', '3', '4']},
-        {transition: '3', state: ['1', '3', '5']}, {transition: '7', state: ['1', '2', '4']},],
-      workflow: {
-        phase: {process: 'Apple', lastVersion: false},
-        gateway: {process: 'Pear', lastVersion: true}
-      },
-    },
-      {code: 'UNDERREVEW', key: '2', roles: [], transform: [], workflow: {},},
-      {code: 'SUBMITTING', key: '3', roles: [], transform: [], workflow: {},},
-      {code: 'REJECTED', key: '4', roles: [], transform: [], workflow: {},},
-      {code: 'CLOSED', key: '5', roles: [], transform: [], workflow: {},}],
+  "stage":{
+    "data":[
+      {
+        "transform":[
+
+        ],
+        "code":"CLOSED",
+        "workflow":{
+          "phase":{
+            "lastVersion":true,
+            "process":"文档审批流程",
+            "oid":"OR:com.pisx.tundra.foundation.workflow.model.WfProcessTemplate:29697"
+          }
+        },
+        "roles":[
+
+        ],
+        "version":"",
+        "key":"e48106f87763459fb906b98bbd5affdc"
+      }
+    ],
+    "activeKey":""
   },
+  "info":{
+    "routing":false,
+    "name":"测试",
+    "description":"测试",
+    "oid":"VR:com.pisx.tundra.foundation.lifecycle.model.LifeCycleTemplate:30949",
+    "supportClass":"com.pisx.tundra.foundation.doc.model.PIDocument",
+    "type":"advanced",
+    "enabled":true
+  }
 };
 const createTemplate = {
   info: {

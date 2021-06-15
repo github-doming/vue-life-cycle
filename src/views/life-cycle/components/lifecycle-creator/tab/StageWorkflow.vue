@@ -106,8 +106,10 @@
         this.visible = false;
       },
       renderData() {
-        if (Object.keys(this.workflowData).length === 0) {
+        if (this.workflowData.phase === undefined) {
           this.$set(this.workflowData, 'phase', {process: null, lastVersion: false});
+        }
+        if (this.workflowData.gateway === undefined) {
           this.$set(this.workflowData, 'gateway', {process: null, lastVersion: false});
         }
       },
