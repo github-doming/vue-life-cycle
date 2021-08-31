@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="stage-title">
-      {{local.feature}} - {{local.stage}}
-    </div>
-    <stage-props :currentStage="currentStage" :stageData="stageData"/>
+<!--    <div class="stage-title">-->
+<!--      {{local.feature}} - {{local.stage}}-->
+<!--    </div>-->
+<!--    <stage-props :currentStage="currentStage" :stageData="stageData"/>-->
     <div class="stage-tab">
-      <a-tabs type="card"  :key="baseType ? 'transform' : ''" >
+      <a-tabs type="card"  :key="baseType ? 'transform' : 'accessControl'" >
         <a-tab-pane key="transform" :tab="local.stage">
           <stage-transform :currentStage="currentStage" :stageData="stageData"/>
         </a-tab-pane>

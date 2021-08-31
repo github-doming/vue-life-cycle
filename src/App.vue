@@ -44,6 +44,7 @@
       cacheData.transitions = LifeCycleData.transitions;
       cacheData.roles = LifeCycleData.roles;
       cacheData.accesses = LifeCycleData.accesses;
+      cacheData.accessesAssociate = LifeCycleData.accessesAssociate;
       cacheData.workflows = LifeCycleData.workflows;
     },
     data() {

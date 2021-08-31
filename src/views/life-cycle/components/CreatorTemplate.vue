@@ -1,13 +1,13 @@
 <template>
   <div class="un-select">
-    <top-button :lifeCycleData="lifeCycleData"/>
-    <div class="lc-head">
-      <h3>{{local.lifeCycle}}-{{lifeCycleData.info.name}}</h3>
-      <div>
-        <a-checkbox v-model="lifeCycleData.info.routing"> {{local.isRouting}}</a-checkbox>
-        <a-checkbox v-model="lifeCycleData.info.enabled"> {{local.isEnable}}</a-checkbox>
-      </div>
-    </div>
+<!--    <top-button :lifeCycleData="lifeCycleData"/>-->
+<!--    <div class="lc-head">-->
+<!--      <h3>{{local.lifeCycle}}-{{lifeCycleData.info.name}}</h3>-->
+<!--      <div>-->
+<!--        <a-checkbox v-model="lifeCycleData.info.routing"> {{local.isRouting}}</a-checkbox>-->
+<!--        <a-checkbox v-model="lifeCycleData.info.enabled"> {{local.isEnable}}</a-checkbox>-->
+<!--      </div>-->
+<!--    </div>-->
     <central-stage :lifeCycleData="lifeCycleData"/>
     <div class="lc-context">
       <context-info :lifeCycleData="lifeCycleData" class="context-height" v-show="!activeKey"/>

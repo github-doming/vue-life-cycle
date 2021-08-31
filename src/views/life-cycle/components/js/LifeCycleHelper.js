@@ -55,6 +55,7 @@ const accesses = [{code: '-1', name: '完全控制(全部)'},
   {code: '4', name: '修改内容'}, {code: '5', name: '修改'},
   {code: '6', name: '修改标识'}, {code: '7', name: '修改安全标签'},
   {code: '8', name: '通过移动创建'}, {code: '9', name: '创建'},];
+const accessesAssociate ={'-1':['2','3','4','5','6','7','8','9'],'3':['2'],'5':['4','6','7'],'9':['8']};
 const workflows = [
   {oid: '1', name: '测试阶段进程', code: 'Apple'},
   {oid: '2', name: '测试关口进程', code: 'Pear'},
@@ -188,7 +189,7 @@ export const LifeCycleMethod = {
 
 };
 export const LifeCycleData = {
-  columns, tableData, supportClass, states, versions, transitions, roles, accesses, templateData, workflows,
+  columns, tableData, supportClass, states, versions, transitions, roles, accesses,accessesAssociate, templateData, workflows,
 };
 
 export const Http = {

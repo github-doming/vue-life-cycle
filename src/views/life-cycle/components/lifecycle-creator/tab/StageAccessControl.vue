@@ -8,8 +8,8 @@
     </div>
     <div class="ac-table-left" style="">
       <a-table :columns="accessColumns" :data-source="accessData" :scroll="{y: 300}" size="small" :pagination="false">
-        <a-checkbox slot="access" slot-scope="option" :key="option.code" v-model="option.checked"
-                    :disabled="!currentRole" @change="accessChange(option)">{{option.name}}
+        <a-checkbox slot="access" slot-scope="boolean,record" :key="record.key" v-model="record.checked"
+                    :disabled="!currentRole" @change="accessChange(record)">{{record.name}}
         </a-checkbox>
       </a-table>
 
@@ -35,7 +35,7 @@
         roleColumns: [{
           title: local.selectedRole, dataIndex: 'name', key: 'key', scopedSlots: {customRender: 'radio'},
         }],
-        accessColumns: [{title: local.access, dataIndex: 'option', key: 'key', scopedSlots: {customRender: 'access'},}],
+        accessColumns: [{title: local.access, dataIndex: 'access', key: 'key', scopedSlots: {customRender: 'access'},}],
 
       }
     },
@@ -95,19 +95,44 @@
         }
       },
       accessChange(option) {
+        const access = this.currentRole.access;
+        const associate = LifeCycleData.accessesAssociate;
+        const key = option.key;
+        const data = this.accessData;
         if (option.checked) {
-          this.currentRole.access.push(option.key);
+          access.push(key);
+          if (associate[key]) {
+            associate[key].forEach(item => {
+              access.push(item);
+              data.forEach(datum => {
+                if (datum.key === item) {
+                  console.log(datum);
+                  datum.checked = true;
+                }
+              })
+            })
+          }
         } else {
-          this.currentRole.access.splice(this.currentRole.access.indexOf(option.key), 1);
+          access.splice(access.indexOf(key), 1);
+          if (associate[key]) {
+            associate[key].forEach(item => {
+              access.splice(access.indexOf(item), 1);
+              data.forEach(datum => {
+                if (datum.key === item) {
+                  datum.checked = false;
+                }
+              })
+            })
+          }
         }
       },
       renderData(access) {
         this.accessData = [];
         for (let data of LifeCycleData.accesses) {
-          const row = {key: data.code, option: {key: data.code, name: data.name, checked: false}};
+          const row = {key: data.code,name: data.name, checked: false};
           for (let key of access) {
             if (key === data.code) {
-              row.option.checked = true;
+              row.checked = true;
               break;
             }
           }
