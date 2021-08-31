@@ -6,13 +6,13 @@ const local = {
   role: '角色', accessControl: '访问控制', workflow: '工作流', selectedRole: '选定角色', access: '权限',
   availableRoles: '可用角色', add: '添加', remove: '移除', item: '项', emptyList: '列表为空', enterSearchContent: '请输入搜索内容',
   process: '进程', skim: '浏览', lastVersion: '使用最新小版本', clear: '清理', gate: '关口', selectTemplateProcess: '选择模板进程',
-  addStage: '新增阶段',cutStage: '剪切阶段',copyStage: '复制阶段',pasteStage: '粘贴阶段',deleteStage: '删除阶段',
+  addStage: '新增阶段', cutStage: '剪切阶段', copyStage: '复制阶段', pasteStage: '粘贴阶段', deleteStage: '删除阶段',
+  participant: '参与者', select: '选择', creator: '创建者', group: '组', service: '服务', qualifier: '限定符', fullName: '全名',
+  username: '用户名', organization: '组织', operator: '操作者', user: '用户', find: '查找',
 };
-
-const columns =
-    [{title: '生命周期模板标识', dataIndex: 'id', width: 180,}, {title: '生命周期模板名称', dataIndex: 'name', width: 180,},
-      {title: '上次更新时间', dataIndex: 'lastUpdateTime', width: 180,}, {title: '版本', dataIndex: 'version', width: 180,},
-      {title: '操作', dataIndex: 'operation', scopedSlots: {customRender: 'operation'},},];
+const columns = [{title: '生命周期模板标识', dataIndex: 'id', width: 180,}, {title: '生命周期模板名称', dataIndex: 'name', width: 180,},
+  {title: '上次更新时间', dataIndex: 'lastUpdateTime', width: 180,}, {title: '版本', dataIndex: 'version', width: 180,},
+  {title: '操作', dataIndex: 'operation', scopedSlots: {customRender: 'operation'},},];
 const tableData = [{id: '1', name: '默认文档生命周期', lastUpdateTime: '2021年4月13日', version: '1.0.25.a'},
   {id: '2', name: '船舶齿轮生命周期', lastUpdateTime: '2020年4月13日', version: '2.13.1.e'},];
 const supportClass = [{name: "Object", code: "java.lang.Object"}, {name: "String", code: "java.lang.String"},
@@ -69,37 +69,52 @@ const workflows = [
   {oid: '11', name: 'PIALMDesignDocWf', code: '1'},
 ];
 const templateData = {
-  "stage":{
-    "data":[
+  "stage": {
+    "data": [
       {
-        "transform":[
-
-        ],
-        "code":"CLOSED",
-        "workflow":{
-          "phase":{
-            "lastVersion":true,
-            "process":"文档审批流程",
-            "oid":"OR:com.pisx.tundra.foundation.workflow.model.WfProcessTemplate:29697"
+        "transform": [],
+        "code": "CLOSED",
+        "workflow": {
+          "phase": {
+            "lastVersion": true,
+            "process": "文档审批流程",
+            "oid": "OR:com.pisx.tundra.foundation.workflow.model.WfProcessTemplate:29697"
           }
         },
-        "roles":[
-
-        ],
-        "version":"",
-        "key":"e48106f87763459fb906b98bbd5affdc"
+        "roles": [{
+          code: "2", name: "CAPA实施者", oid: "2", participants: [
+            {
+              key: "group1", name: "group1", type: 'group', service: 'com.pisx.Ldap',
+              qualifier: 'cn=administrators,ou=people,cn=AdministratorActivityLdap,cn=windchill_11.2,o=ptc'
+            },
+            {
+              key: "user2", name: "user2", fullname: "user2", type: 'user', service: 'com.pisx.Ldap',
+              qualifier: 'cn=administrators,ou=people,cn=AdministratorActivityLdap,cn=windchill_11.2,o=ptc'
+            },
+            {
+              key: "group3", name: "group3", type: 'group', service: 'com.pisx.Ldap',
+              qualifier: 'cn=administrators,ou=people,cn=AdministratorActivityLdap,cn=windchill_11.2,o=ptc'
+            },
+            {key: "role4", name: "role5", type: 'role', service: '', qualifier: ''},
+            {key: "creator", name: "参与者", type: 'actor', service: '', qualifier: ''},
+            {key: "12",code: '12', name: 'CAPA请求者', type: 'role', service: '', qualifier: ''},
+          ]
+        },
+          {code: "3", name: "CAPA审阅者", oid: "3", participants: []}],
+        "version": "",
+        "key": "e48106f87763459fb906b98bbd5affdc"
       }
     ],
-    "activeKey":""
+    "activeKey": ""
   },
-  "info":{
-    "routing":false,
-    "name":"测试",
-    "description":"测试",
-    "oid":"VR:com.pisx.tundra.foundation.lifecycle.model.LifeCycleTemplate:30949",
-    "supportClass":"com.pisx.tundra.foundation.doc.model.PIDocument",
-    "type":"advanced",
-    "enabled":true
+  "info": {
+    "routing": false,
+    "name": "测试",
+    "description": "测试",
+    "oid": "VR:com.pisx.tundra.foundation.lifecycle.model.LifeCycleTemplate:30949",
+    "supportClass": "com.pisx.tundra.foundation.doc.model.PIDocument",
+    "type": "advanced",
+    "enabled": true
   }
 };
 const createTemplate = {
@@ -150,13 +165,15 @@ export const LifeCycleComputed = {
   },
 };
 import cacheData from "./LifeCycleData";
+import {postJson} from '@/common';
+
 export const LifeCycleMethod = {
   stageClick() {
     return function (phaseKey) {
       this.activeKey = phaseKey;
     }
   },
-  phaseName(){
+  phaseName() {
     return function (phaseCode) {
       if (phaseCode) {
         for (let state of cacheData.states) {
@@ -170,7 +187,38 @@ export const LifeCycleMethod = {
   }
 
 };
-
 export const LifeCycleData = {
-  columns,tableData,supportClass,states,versions,transitions,roles,accesses,templateData,workflows,
+  columns, tableData, supportClass, states, versions, transitions, roles, accesses, templateData, workflows,
+};
+
+export const Http = {
+  async getParticipant(key,from) {
+    let data = {...from};
+    data.key = key;
+    let result;
+    await postJson('http://internal.pisx.com:3350/login?', data).then(response => {
+      if (response.status === 200) {
+        result = [];
+        let len = 15 + Math.ceil(Math.random() * 10);
+        if (key === 'user') {
+          for (let i = 0; i < len; i++) {
+            result.push({
+              code: key + i, name: key + i, fullName: "Ldap " + key + i, service: 'com.pisx.Ldap',
+              qualifier: 'cn=administrators,ou=people,cn=AdministratorActivityLdap,cn=windchill_11.2,o=ptc',
+            });
+          }
+        } else {
+          for (let i = 0; i < len; i++) {
+            result.push({
+              code: key + i, name: key + i, service: 'com.pisx.Ldap',
+              qualifier: 'cn=administrators,ou=people,cn=AdministratorActivityLdap,cn=windchill_11.2,o=ptc',
+
+            });
+          }
+        }
+      }
+    });
+    return result;
+  },
+
 };
