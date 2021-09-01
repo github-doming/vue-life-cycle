@@ -102,34 +102,45 @@
         if (option.checked) {
           access.push(key);
           if (associate[key]) {
-            associate[key].forEach(item => {
-              access.push(item);
-              data.forEach(datum => {
-                if (datum.key === item) {
-                  console.log(datum);
-                  datum.checked = true;
-                }
+            if (associate[key].add) {
+              associate[key].add.forEach(item => {
+                access.push(item);
+                data.forEach(datum => {
+                  if (datum.key === item) {
+                    datum.checked = true;
+                  }
+                })
               })
-            })
+            }
+            if (associate[key].remove) {
+              associate[key].remove.forEach(item => {
+                access.forEach((i, index, arr)=> {
+                  if(i === item) {
+                    arr.splice(index, 1);
+                  }
+                });
+                data.forEach(datum => {
+                  if (datum.key === item) {
+                    datum.checked = false;
+                  }
+                })
+
+              })
+            }
           }
         } else {
-          access.splice(access.indexOf(key), 1);
-          if (associate[key]) {
-            associate[key].forEach(item => {
-              access.splice(access.indexOf(item), 1);
-              data.forEach(datum => {
-                if (datum.key === item) {
-                  datum.checked = false;
-                }
-              })
-            })
-          }
+          access.forEach((i, index, arr)=> {
+            if(i === key) {
+              arr.splice(index, 1);
+            }
+          });
         }
+        this.currentRole.access = Array.from(new Set(access));
       },
       renderData(access) {
         this.accessData = [];
         for (let data of LifeCycleData.accesses) {
-          const row = {key: data.code,name: data.name, checked: false};
+          const row = {key: data.code, name: data.name, checked: false};
           for (let key of access) {
             if (key === data.code) {
               row.checked = true;

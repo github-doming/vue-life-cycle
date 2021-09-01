@@ -35,7 +35,7 @@
 
   export default {
     name: "App",
-    components: {LifeCycleTemplate, CreatorTemplate,ViewerTemplate},
+    components: {LifeCycleTemplate, CreatorTemplate, ViewerTemplate},
     mounted() {
       localStorage.setItem('lifeCycleLocal', JSON.stringify(LifeCycleFunction.getLocal()));
       cacheData.supportClass = LifeCycleData.supportClass;
@@ -46,6 +46,7 @@
       cacheData.accesses = LifeCycleData.accesses;
       cacheData.accessesAssociate = LifeCycleData.accessesAssociate;
       cacheData.workflows = LifeCycleData.workflows;
+      cacheData.roleActors = LifeCycleData.roleActors;
     },
     data() {
       return {

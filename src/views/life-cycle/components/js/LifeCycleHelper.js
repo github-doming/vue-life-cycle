@@ -55,7 +55,12 @@ const accesses = [{code: '-1', name: '完全控制(全部)'},
   {code: '4', name: '修改内容'}, {code: '5', name: '修改'},
   {code: '6', name: '修改标识'}, {code: '7', name: '修改安全标签'},
   {code: '8', name: '通过移动创建'}, {code: '9', name: '创建'},];
-const accessesAssociate ={'-1':['2','3','4','5','6','7','8','9'],'3':['2'],'5':['4','6','7'],'9':['8']};
+const accessesAssociate = {
+  '-1': {remove: ['2', '3', '4', '5', '6', '7', '8', '9']},
+  '3': {add: ['2'], remove: ['-1']},
+  '5': {add: ['4', '6', '7'], remove: ['-1']},
+  '9': {add: ['8'], remove: ['-1']}
+};
 const workflows = [
   {oid: '1', name: '测试阶段进程', code: 'Apple'},
   {oid: '2', name: '测试关口进程', code: 'Pear'},
@@ -69,6 +74,7 @@ const workflows = [
   {oid: '10', name: 'PIAL _MDefectWf', code: '2'},
   {oid: '11', name: 'PIALMDesignDocWf', code: '1'},
 ];
+const roleActors = [{code: "creator", name: local.creator, type: 'actor', service: '', qualifier: ''}];
 const templateData = {
   "stage": {
     "data": [
@@ -98,7 +104,7 @@ const templateData = {
             },
             {key: "role4", name: "role5", type: 'role', service: '', qualifier: ''},
             {key: "creator", name: "参与者", type: 'actor', service: '', qualifier: ''},
-            {key: "12",code: '12', name: 'CAPA请求者', type: 'role', service: '', qualifier: ''},
+            {key: "12", code: '12', name: 'CAPA请求者', type: 'role', service: '', qualifier: ''},
           ]
         },
           {code: "3", name: "CAPA审阅者", oid: "3", participants: []}],
@@ -186,14 +192,15 @@ export const LifeCycleMethod = {
       return '';
     }
   }
-
 };
+
 export const LifeCycleData = {
-  columns, tableData, supportClass, states, versions, transitions, roles, accesses,accessesAssociate, templateData, workflows,
+  columns, tableData, supportClass, states, versions, transitions, roles, accesses, accessesAssociate, templateData,
+  workflows, roleActors,
 };
 
 export const Http = {
-  async getParticipant(key,from) {
+  async getParticipant(key, from) {
     let data = {...from};
     data.key = key;
     let result;

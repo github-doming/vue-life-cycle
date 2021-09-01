@@ -133,7 +133,7 @@
       LifeCycleData.roles.forEach(role => {
         roles.push({code: role.code, name: role.name, type: 'role', service: '', qualifier: ''})
       });
-      const roleActor = [{code: "creator", name: local.creator, type: 'actor', service: '', qualifier: ''}];
+      const roleActor = LifeCycleData.roleActors;
       return {
         local, fromCol: {labelCol: {span: 3}, wrapperCol: {span: 16}}, activeSource: 'group', roles, roleActor,
         groupColumns, userColumns, participantColumns, orgColumns, actorColumns, roleColumns, groupData: [],
